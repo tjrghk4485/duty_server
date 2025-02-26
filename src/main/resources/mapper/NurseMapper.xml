@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duty_b.duty_server.mapper.NurseMapper">
+
+    <!--<resultMap id="nurseResultMap" type="com.duty_b.duty_server.model.Nurse">
+        <result property="parentId" column="PARENT_ID"/>
+        <result property="nurseId" column="NURSE_ID"/>
+        <result property="nurseNm" column="NURSE_NM"/>
+        <result property="startDate" column="START_DATE"/>
+        <result property="shifyTy" column="SHIFY_TY"/>
+        <result property="regDtm" column="REG_DTM"/>
+        <result property="updDtm" column="UPD_DTM"/>
+    </resultMap>
+-->
+    <!-- 예시: 사용자 조회 쿼리 -->
+    <select id="findById" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT "PARENT_ID","NURSE_ID","NURSE_NM","START_DATE","SHIFY_TY","REG_DTM","UPD_DTM" FROM "NURSE" WHERE "NURSE_ID" = #{id}
+    </select>
+
+
+
+</mapper>
