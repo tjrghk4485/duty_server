@@ -25,7 +25,7 @@ public class NurseController {
     }
 
     @PostMapping("/mod")
-    public List<Map<String, Object>> nurseMod(@RequestParam Map<String, Object> params) {
+    public List<Map<String, Object>> nurseMod(@RequestBody List<Map<String, Object>> params) {
         System.out.println("params=" + params.toString());
         return nurseService.modify("com.duty_b.duty_server.mapper.NurseMapper.findById",params);
     }

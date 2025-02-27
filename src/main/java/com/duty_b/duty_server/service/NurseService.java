@@ -21,8 +21,8 @@ public class NurseService {
         return sqlSessionTemplate.selectList(name,params);
     }
 
-    public List<Map<String, Object>> modify(String name,Map<String, Object> params) {
-        return sqlSessionTemplate.selectList(name,params);
+    public List<Map<String, Object>> modify(String name,List<Map<String, Object>> params) {
+        return sqlSessionTemplate.selectOne(name,params);
     }
 
 
