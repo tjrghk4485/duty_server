@@ -17,7 +17,11 @@ public class NurseService {
 
 
 
-    public List<Map<String, Object>> getNurseById(String name,Map<String, Object> params) {
+    public List<Map<String, Object>> select(String name,Map<String, Object> params) {
+        return sqlSessionTemplate.selectList(name,params);
+    }
+
+    public List<Map<String, Object>> modify(String name,Map<String, Object> params) {
         return sqlSessionTemplate.selectList(name,params);
     }
 

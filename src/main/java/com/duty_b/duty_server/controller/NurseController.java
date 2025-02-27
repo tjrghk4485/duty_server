@@ -14,14 +14,20 @@ import java.util.Map;
 @RequestMapping(value = "bm/nurse")
 public class NurseController {
     @Autowired
-    private NurseService userService;
+    private NurseService nurseService;
 
 
 
     @GetMapping("/sel")
     public List<Map<String, Object>> getNurse(@RequestParam Map<String, Object> params) {
 
-        return userService.getNurseById("com.duty_b.duty_server.mapper.NurseMapper.findById",params);
+        return nurseService.select("com.duty_b.duty_server.mapper.NurseMapper.findById",params);
+    }
+
+    @PostMapping("/mod")
+    public List<Map<String, Object>> nurseMod(@RequestParam Map<String, Object> params) {
+        System.out.println("params=" + params.toString());
+        return nurseService.modify("com.duty_b.duty_server.mapper.NurseMapper.findById",params);
     }
 
 }
