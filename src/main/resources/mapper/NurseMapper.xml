@@ -13,10 +13,47 @@
     </resultMap>
 -->
     <!-- 예시: 사용자 조회 쿼리 -->
-    <select id="findById" parameterType="java.lang.String" resultType="java.util.Map">
-        SELECT "PARENT_ID","NURSE_ID","NURSE_NM","START_DATE","SHIFY_TY","REG_DTM","UPD_DTM" FROM "NURSE" WHERE "NURSE_ID" = #{id}
+    <select id="nurse_sel" parameterType="java.lang.String" resultType="java.util.Map">
+        select  parent_id,
+                nurse_id,
+                nurse_nm,
+                start_date,
+                use_yn
+         from   nurse
+        where   parent_id = #{parent_id}
+
     </select>
 
+    <update  id="nurse_mod" parameterType="java.util.Map" statementType="CALLABLE">
+        {
+        CALL nurse_mod(
+         #{status}
+        ,#{parent_id}
+        ,#{nurse_id}
+        ,#{nurse_nm}
+        ,#{use_yn}
+        ,#{start_date}
+        ,#{output_val, mode=OUT, jdbcType=INTEGER}
+        ,#{output_cnt, mode=OUT, jdbcType=INTEGER}
+        #{output_msg, mode=OUT, jdbcType=VARCHAR}
+        )
+        }
+    </update>
+    <!--<update id="nurse_mod" parameterType="java.util.List" statementType="CALLABLE">
+        <foreach collection="list" item="nurse" separator=";" >
+            CALL nurse_mod(
+            #{nurse.status},
+            #{nurse.parent_id},
+            #{nurse.nurse_id},
+            #{nurse.nurse_nm},
+            #{nurse.use_yn},
+            #{nurse.start_date},
+            #{nurse.output_val, mode=OUT, jdbcType=INTEGER},
+            #{nurse.output_cnt, mode=OUT, jdbcType=INTEGER},
+            #{nurse.output_msg, mode=OUT, jdbcType=VARCHAR}
+            )
+        </foreach>
+    </update>-->
 
 
 </mapper>
