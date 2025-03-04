@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.duty_b.duty_server.mapper.NurseMapper">
+<mapper namespace="nurseDto">
 
     <!--<resultMap id="nurseResultMap" type="com.duty_b.duty_server.model.Nurse">
         <result property="parentId" column="PARENT_ID"/>
@@ -24,21 +24,45 @@
 
     </select>
 
-    <update  id="nurse_mod" parameterType="java.util.Map" statementType="CALLABLE">
-        {
+
+    <update id="nurse_mod" statementType="CALLABLE" parameterType="java.util.Map" >
+
         CALL nurse_mod(
-         #{status}
-        ,#{parent_id}
-        ,#{nurse_id}
-        ,#{nurse_nm}
-        ,#{use_yn}
-        ,#{start_date}
-        ,#{output_val, mode=OUT, jdbcType=INTEGER}
-        ,#{output_cnt, mode=OUT, jdbcType=INTEGER}
+        #{status},
+        #{parent_id},
+        #{nurse_id},
+        #{nurse_nm},
+        #{start_date},<!--
+        #{output_val, mode=OUT, jdbcType=INTEGER} ,
+        #{output_cnt, mode=OUT, jdbcType=INTEGER},-->
         #{output_msg, mode=OUT, jdbcType=VARCHAR}
         )
-        }
+
     </update>
+
+
+    <update id="p_test" statementType="CALLABLE" parameterType="java.util.Map" >
+
+        CALL p_test(
+        #{output_val,mode=OUT, jdbcType=INTEGER}
+        )
+
+    </update>
+
+    <!-- <update  id="nurse_mod" parameterType="java.util.Map" statementType="CALLABLE">
+         {
+         CALL nurse_mod(
+          #{status}
+         ,#{parent_id}
+         ,#{nurse_id}
+         ,#{nurse_nm}
+         ,#{start_date}
+         ,#{output_val, mode=OUT, jdbcType=INTEGER}
+         ,#{output_cnt, mode=OUT, jdbcType=INTEGER}
+         ,#{output_msg, mode=OUT, jdbcType=VARCHAR}
+         )
+         }
+     </update>-->
     <!--<update id="nurse_mod" parameterType="java.util.List" statementType="CALLABLE">
         <foreach collection="list" item="nurse" separator=";" >
             CALL nurse_mod(

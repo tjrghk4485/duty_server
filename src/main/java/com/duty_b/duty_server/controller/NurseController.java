@@ -21,13 +21,13 @@ public class NurseController {
     @GetMapping("/sel")
     public List<Map<String, Object>> getNurse(@RequestParam Map<String, Object> params) {
 
-        return nurseService.select("com.duty_b.duty_server.mapper.NurseMapper.nurse_sel",params);
+        return nurseService.select("nurseDto.nurse_sel",params);
     }
 
     @PostMapping("/mod")
-    public void nurseMod(@RequestBody List<Map<String, Object>> params) {
+    public Map<String, Object> nurseMod(@RequestBody List<Map<String, Object>> params) {
         System.out.println("params=" + params.toString());
-        nurseService.modify("com.duty_b.duty_server.mapper.NurseMapper.nurse_mod",params);
+        return nurseService.modify("nurseDto.nurse_mod",params);
     }
 
 }

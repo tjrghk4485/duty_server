@@ -21,33 +21,40 @@ public class NurseService {
         return sqlSessionTemplate.selectList(name,params);
     }
 
-    public void modify(String name,List<Map<String, Object>> params) {
+    public Map<String, Object> modify(String name,List<Map<String, Object>> params) {
+        Map<String, Object> returnnurseParams = null;
+        /*for (Map<String, Object> nurseParams : params) {
 
-        for (Map<String, Object> nurseParams : params) {
             try {
+                *//*nurseParams.put("output_val", 10);          // OUT 파라미터 (초기 값은 0)
+                nurseParams.put("output_cnt", 10);           // OUT 파라미터 (초기 값은 0)
+                *//**//*nurseParams.put("output_msg", "test"); *//*         // OUT 파라미터 (초기 값은 빈 문자열)
                 System.out.println("nurseParams=" + nurseParams);
-                sqlSessionTemplate.selectOne(name, nurseParams);
-
-                Integer outputVal = (Integer) nurseParams.get("output_val");
-                Integer outputCnt = (Integer) nurseParams.get("output_cnt");
-                String outputMsg = (String) nurseParams.get("output_msg");
-
-                // OUT 파라미터 값 로그에 출력
-                System.out.println("Nurse ID: " + nurseParams.get("nurse_id"));
-                System.out.println("Output Value: " + outputVal);
-                System.out.println("Output Count: " + outputCnt);
-                System.out.println("Output Message: " + outputMsg);
+                sqlSessionTemplate.insert(name, nurseParams);
+                System.out.println("output_msg=" + nurseParams.get("output_msg"));
+                returnnurseParams = nurseParams;
+                return returnnurseParams;
+            } catch (Exception e) {
+                e.printStackTrace();
+                // 예외 발생 시 처리
+                returnnurseParams = nurseParams;
+                return returnnurseParams;
+            }*/
+            try {
+                for (Map<String, Object> nurseParams : params) {
+                    System.out.println("nurseParams=" + nurseParams);
+                    sqlSessionTemplate.insert(name, nurseParams);
+                    System.out.println("output_msg=" + nurseParams.get("output_msg"));
+                    returnnurseParams = nurseParams;
+                    if(nurseParams.get("output_msg") != "저장되었습니다"){
+                        /*break;*/
+                    }
+                }
+            }catch (Exception e){
+                returnnurseParams.put("output_msg","에러발생!");
             }
-        catch(Exception e){
-            e.printStackTrace();
-            // 예외 발생 시 처리
 
-        }
 
+        return returnnurseParams;
     }
-    }
-
-
-
-
 }
