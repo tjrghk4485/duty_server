@@ -56,7 +56,14 @@ public class KakaoAuthService {
 
     // ✅ 2. 내 DB에 회원 코드 찾기 (없으면 새로 만들기)
     public Long getOrCreateMember(Map<String, Object> map) {
-        return 10L;
+        List<Map<String, Object>> userChk = nurseService.select("nurseDto.user_sel",map);
+        if(userChk){
+            return userChk;
+        }else{
+            nurseService.modify("nurseDto.user_mod", map);
+             userChk = nurseService.select("nurseDto.user_sel",map);
+             return userChk;
+        }
     }
 
     // ✅ 카카오 API에서 `access_token` 가져오기

@@ -95,5 +95,41 @@ public class NurseService {
         return returnnurseParams;
     }
 
+    public Map<String, Object> modify(String name, Map<String, Object> param) {
+        Map<String, Object> returnnurseParams = new HashMap<>();
+        SqlSession sqlSession = null;
+        TransactionStatus tsts = null;
+        try {
+            sqlSession = sqlSessionFactory.openSession();  // 새로운 세션 생성
+            DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+            def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);  // 기본 트랜잭션 전파
+            tsts = transactionManager.getTransaction(def);
+
+
+                sqlSession.update(name, param);
+                returnnurseParams.put("output_msg", param.get("output_msg"));
+                System.out.println("param.get(\"output_msg\")" + param.get("output_msg"));
+
+                if (!param.get("output_msg").equals("저장되었습니다")) {
+                    returnnurseParams.put("output_msg", param.get("output_msg"));
+
+                }
+
+
+            transactionManager.commit(tsts);
+        } catch (Exception e) {
+            if (tsts != null) {
+                transactionManager.rollback(tsts);
+            }
+            returnnurseParams.put("output_msg", "에러발생! " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            if (sqlSession != null) {
+                sqlSession.close();  // 세션 종료
+            }
+        }
+        return returnnurseParams;
+    }
+
 
 }
