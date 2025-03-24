@@ -1,5 +1,6 @@
 package com.duty_b.duty_server.controller;
 
+
 import com.duty_b.duty_server.model.Nurse;
 import com.duty_b.duty_server.service.NurseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,8 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "nurse")
-public class NurseController {
+@RequestMapping(value = "schedule")
+public class ScheduleController {
     @Autowired
     private NurseService nurseService;
 
@@ -21,14 +22,16 @@ public class NurseController {
     @GetMapping("/sel")
     public List<Map<String, Object>> getNurse(@RequestParam Map<String, Object> params) {
 
-        return nurseService.select("nurseDto.nurse_sel",params);
+        return nurseService.select("nurseDto.schedule_sel",params);
     }
 
 
     @PostMapping("/mod")
     public Map<String, Object> nurseMod(@RequestBody List<Map<String, Object>> params) {
         System.out.println("params=" + params.toString());
-        return nurseService.modify("nurseDto.nurse_mod",params);
+        return nurseService.modify("nurseDto.schedule_mod",params);
     }
 
 }
+
+

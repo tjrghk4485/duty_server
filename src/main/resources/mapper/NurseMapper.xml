@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.duty_b.duty_server.mapper.NurseMapper">
+<mapper namespace="nurseDto">
 
     <!--<resultMap id="nurseResultMap" type="com.duty_b.duty_server.model.Nurse">
         <result property="parentId" column="PARENT_ID"/>
@@ -24,21 +24,108 @@
 
     </select>
 
-    <update  id="nurse_mod" parameterType="java.util.Map" statementType="CALLABLE">
-        {
+    <select id="schedule_sel" parameterType="java.lang.String" resultType="java.util.Map">
+
+        SELECT a.parent_id,
+               a.nurse_nm AS "name",
+                MAX(CASE WHEN b.work_day = '1' THEN work_type ELSE NULL END) AS "1",
+                MAX(CASE WHEN b.work_day = '2' THEN work_type ELSE NULL END) AS "2",
+                MAX(CASE WHEN b.work_day = '3' THEN work_type ELSE NULL END) AS "3",
+                MAX(CASE WHEN b.work_day = '4' THEN work_type ELSE NULL END) AS "4",
+                MAX(CASE WHEN b.work_day = '5' THEN work_type ELSE NULL END) AS "5",
+                MAX(CASE WHEN b.work_day = '6' THEN work_type ELSE NULL END) AS "6",
+                MAX(CASE WHEN b.work_day = '7' THEN work_type ELSE NULL END) AS "7",
+                MAX(CASE WHEN b.work_day = '8' THEN work_type ELSE NULL END) AS "8",
+                MAX(CASE WHEN b.work_day = '9' THEN work_type ELSE NULL END) AS "9",
+                MAX(CASE WHEN b.work_day = '10' THEN work_type ELSE NULL END) AS "10",
+                MAX(CASE WHEN b.work_day = '11' THEN work_type ELSE NULL END) AS "11",
+                MAX(CASE WHEN b.work_day = '12' THEN work_type ELSE NULL END) AS "12",
+                MAX(CASE WHEN b.work_day = '13' THEN work_type ELSE NULL END) AS "13",
+                MAX(CASE WHEN b.work_day = '14' THEN work_type ELSE NULL END) AS "14",
+                MAX(CASE WHEN b.work_day = '15' THEN work_type ELSE NULL END) AS "15",
+                MAX(CASE WHEN b.work_day = '16' THEN work_type ELSE NULL END) AS "16",
+                MAX(CASE WHEN b.work_day = '17' THEN work_type ELSE NULL END) AS "17",
+                MAX(CASE WHEN b.work_day = '18' THEN work_type ELSE NULL END) AS "18",
+                MAX(CASE WHEN b.work_day = '19' THEN work_type ELSE NULL END) AS "19",
+                MAX(CASE WHEN b.work_day = '20' THEN work_type ELSE NULL END) AS "20",
+                MAX(CASE WHEN b.work_day = '21' THEN work_type ELSE NULL END) AS "21",
+                MAX(CASE WHEN b.work_day = '22' THEN work_type ELSE NULL END) AS "22",
+                MAX(CASE WHEN b.work_day = '23' THEN work_type ELSE NULL END) AS "23",
+                MAX(CASE WHEN b.work_day = '24' THEN work_type ELSE NULL END) AS "24",
+                MAX(CASE WHEN b.work_day = '25' THEN work_type ELSE NULL END) AS "25",
+                MAX(CASE WHEN b.work_day = '26' THEN work_type ELSE NULL END) AS "26",
+                MAX(CASE WHEN b.work_day = '27' THEN work_type ELSE NULL END) AS "27",
+                MAX(CASE WHEN b.work_day = '28' THEN work_type ELSE NULL END) AS "28",
+                MAX(CASE WHEN b.work_day = '29' THEN work_type ELSE NULL END) AS "29",
+                MAX(CASE WHEN b.work_day = '30' THEN work_type ELSE NULL END) AS "30",
+                MAX(CASE WHEN b.work_day = '31' THEN work_type ELSE NULL END) AS "31"
+        FROM nurse a
+        left outer join workschedule b
+        on a.nurse_id = b.nurse_id
+        left outer join schedulemonthplan c
+        on a.parent_id = c.parent_id
+        where a.parent_id = '100'
+          and c.work_date  = #{dateData}
+        GROUP BY
+        a.parent_id, a.nurse_id
+        ORDER BY
+        a.parent_id, a.nurse_id;
+
+    </select>
+
+
+
+    <update id="nurse_mod" statementType="CALLABLE" parameterType="java.util.Map" >
+
         CALL nurse_mod(
-         #{status}
-        ,#{parent_id}
-        ,#{nurse_id}
-        ,#{nurse_nm}
-        ,#{use_yn}
-        ,#{start_date}
-        ,#{output_val, mode=OUT, jdbcType=INTEGER}
-        ,#{output_cnt, mode=OUT, jdbcType=INTEGER}
+        #{status},
+        #{parent_id},
+        #{nurse_id},
+        #{nurse_nm},
+        #{start_date},
+        #{output_val, mode=OUT, jdbcType=VARCHAR} ,
         #{output_msg, mode=OUT, jdbcType=VARCHAR}
         )
-        }
+
     </update>
+
+
+    <update id="schedule_mod" statementType="CALLABLE" parameterType="java.util.Map" >
+
+        CALL schedule_mod(
+        #{work_date},
+        #{parent_id},
+        #{nurse_id},
+        #{work_type},
+        #{work_day,jdbcType=VARCHAR},
+        #{output_val, mode=OUT, jdbcType=VARCHAR} ,
+        #{output_msg, mode=OUT, jdbcType=VARCHAR}
+        )
+
+    </update>
+
+    <update id="p_test" statementType="CALLABLE" parameterType="java.util.Map" >
+
+        CALL p_test(
+        #{output_val,mode=OUT, jdbcType=INTEGER}
+        )
+
+    </update>
+
+    <!-- <update  id="nurse_mod" parameterType="java.util.Map" statementType="CALLABLE">
+         {
+         CALL nurse_mod(
+          #{status}
+         ,#{parent_id}
+         ,#{nurse_id}
+         ,#{nurse_nm}
+         ,#{start_date}
+         ,#{output_val, mode=OUT, jdbcType=INTEGER}
+         ,#{output_cnt, mode=OUT, jdbcType=INTEGER}
+         ,#{output_msg, mode=OUT, jdbcType=VARCHAR}
+         )
+         }
+     </update>-->
     <!--<update id="nurse_mod" parameterType="java.util.List" statementType="CALLABLE">
         <foreach collection="list" item="nurse" separator=";" >
             CALL nurse_mod(
