@@ -49,21 +49,26 @@ public class KakaoAuthService {
         System.out.println("response=" + response.toString());
         Map<String, Object> userInfo = response.getBody();
         Long kakaoId = ((Number) userInfo.get("id")).longValue();
+        Map<String, Object> propertiesMap = (Map<String, Object>) userInfo.get("properties");
+        String nickname = (String) propertiesMap.get("nickname");
+        String profile_image = (String) propertiesMap.get("profile_image");
         returnMap.put("kakaoId", kakaoId);
-
+        returnMap.put("nickname", nickname);
+        returnMap.put("profile_image", profile_image);
         return returnMap;
     }
 
     // ✅ 2. 내 DB에 회원 코드 찾기 (없으면 새로 만들기)
     public Long getOrCreateMember(Map<String, Object> map) {
         List<Map<String, Object>> userChk = nurseService.select("nurseDto.user_sel",map);
-        if(userChk){
+        /*if(userChk){
             return userChk;
         }else{
             nurseService.modify("nurseDto.user_mod", map);
              userChk = nurseService.select("nurseDto.user_sel",map);
              return userChk;
-        }
+        }*/
+        return 10L;
     }
 
     // ✅ 카카오 API에서 `access_token` 가져오기

@@ -24,13 +24,13 @@ public class AuthController {
         String code = request.get("code");
         System.out.println("code=" + code);
         Map<String, Object> map = kakaoAuthService.getKakaoUserInfo(code); // 🔥 카카오 사용자 정보 가져오기
-        Long memberCode = kakaoAuthService.getOrCreateMember(map); // 🔥 회원 코드 매핑
+        /*Long memberCode = kakaoAuthService.getOrCreateMember(map); // 🔥 회원 코드 매핑
 
         String token = jwtService.generateToken(memberCode); // 🔥 JWT 발급
-
+*/
         Map<String, Object> response = new HashMap<>();
-        response.put("token", token);
-        response.put("memberCode", memberCode);
+        response.put("token", map);
+
 
         return ResponseEntity.ok(response);
     }
