@@ -13,14 +13,23 @@
     </resultMap>
 -->
     <!-- 예시: 사용자 조회 쿼리 -->
+
+    <select id="user_chk" parameterType="java.lang.String" resultType="java.util.Map">
+        select user_id as id
+          from userstatus
+         where user_id = #{id}
+
+    </select>
+
+
     <select id="nurse_sel" parameterType="java.lang.String" resultType="java.util.Map">
-        select  parent_id,
-                nurse_id,
-                nurse_nm,
-                start_date,
-                use_yn
-         from   nurse
-        where   parent_id = #{parent_id}
+        select parent_id,
+               nurse_id,
+               nurse_nm,
+               start_date,
+               use_yn
+         from  nurse
+        where parent_id = #{parent_id}
 
     </select>
 
@@ -104,6 +113,20 @@
         )
 
     </update>
+
+
+    <update id="user_register" statementType="CALLABLE" parameterType="java.util.Map" >
+
+        CALL user_register(
+        #{id},
+        #{password},
+        #{user_nm},
+        #{output_val, mode=OUT, jdbcType=VARCHAR} ,
+        #{output_msg, mode=OUT, jdbcType=VARCHAR}
+        )
+
+    </update>
+
 
     <update id="p_test" statementType="CALLABLE" parameterType="java.util.Map" >
 
