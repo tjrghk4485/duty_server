@@ -27,6 +27,7 @@
     <select id="schedule_sel" parameterType="java.lang.String" resultType="java.util.Map">
 
         SELECT a.parent_id,
+               a.nurse_id,
                a.nurse_nm AS "name",
                 MAX(CASE WHEN b.work_day = '1' THEN work_type ELSE NULL END) AS "1",
                 MAX(CASE WHEN b.work_day = '2' THEN work_type ELSE NULL END) AS "2",
