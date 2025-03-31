@@ -21,13 +21,33 @@
 
     </select>
 
+    <select id="kakao_user_chk" parameterType="java.lang.Long" resultType="java.util.Map">
+        select user_id as id
+        from userstatus
+        where kakao_id = #{id}
+
+    </select>
+
+
+    <select id="user_login" parameterType="java.lang.String" resultType="java.util.Map">
+        select user_id as id,
+               user_nm
+        from userstatus
+        where user_id = #{id}
+          and user_password = #{password}
+
+    </select>
+
 
     <select id="nurse_sel" parameterType="java.lang.String" resultType="java.util.Map">
         select parent_id,
                nurse_id,
                nurse_nm,
                start_date,
-               use_yn
+                CASE
+                WHEN use_yn = 0 THEN FALSE
+                WHEN use_yn = 1 THEN TRUE
+                END as use_yn
          from  nurse
         where parent_id = #{parent_id}
 
@@ -93,6 +113,7 @@
         #{nurse_id},
         #{nurse_nm},
         #{start_date},
+        #{use_yn},
         #{output_val, mode=OUT, jdbcType=VARCHAR} ,
         #{output_msg, mode=OUT, jdbcType=VARCHAR}
         )
@@ -114,13 +135,22 @@
 
     </update>
 
+    <update id="kakao_user_mod" statementType="CALLABLE" parameterType="java.util.Map" >
+
+        CALL kakao_user_mod(
+        #{kakaoId},
+        #{output_val, mode=OUT, jdbcType=VARCHAR} ,
+        #{output_msg, mode=OUT, jdbcType=VARCHAR}
+        )
+
+    </update>
 
     <update id="user_register" statementType="CALLABLE" parameterType="java.util.Map" >
 
         CALL user_register(
         #{id},
-        #{password},
         #{user_nm},
+        #{password},
         #{output_val, mode=OUT, jdbcType=VARCHAR} ,
         #{output_msg, mode=OUT, jdbcType=VARCHAR}
         )

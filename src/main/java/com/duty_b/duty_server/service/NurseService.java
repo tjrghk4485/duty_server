@@ -30,6 +30,9 @@ public class NurseService {
     public List<Map<String, Object>> select(String name,Map<String, Object> params) {
         return sqlSessionTemplate.selectList(name,params);
     }
+    public List<Map<String, Object>> select(String name,long params) {
+        return sqlSessionTemplate.selectList(name,params);
+    }
 
    /* public Map<String, Object> modify(String name, List<Map<String, Object>> params) {
         Map<String, Object> returnnurseParams = new HashMap<>();;
@@ -111,6 +114,7 @@ public class NurseService {
                 System.out.println("param.get(\"output_msg\")" + param.get("output_msg"));
 
                 if (!param.get("output_msg").equals("저장되었습니다")) {
+                    returnnurseParams.put("output_val", param.get("output_val"));
                     returnnurseParams.put("output_msg", param.get("output_msg"));
 
                 }
