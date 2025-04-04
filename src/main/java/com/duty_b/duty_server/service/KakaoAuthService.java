@@ -53,7 +53,8 @@ public class KakaoAuthService {
         String nickname = (String) propertiesMap.get("nickname");
         String profile_image = (String) propertiesMap.get("profile_image");
         returnMap.put("kakaoId", kakaoId);
-        String userId = getOrCreateMember(kakaoId,returnMap);
+        String nurseUserId = getOrCreateMember(kakaoId,returnMap);
+        returnMap.put("userId", nurseUserId);
         returnMap.put("nickname", nickname);
         returnMap.put("profile_image", profile_image);
         return returnMap;
@@ -71,7 +72,7 @@ public class KakaoAuthService {
              userChk = nurseService.select("nurseDto.kakao_user_chk",id);
             System.out.println("userChk3=" + userChk.get(0));
             System.out.println("userChk4=" + userChk);
-             return "A";
+             return (String) userChk.get(0).get("id");
         }
 
     }

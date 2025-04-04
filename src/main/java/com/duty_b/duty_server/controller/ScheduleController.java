@@ -20,16 +20,22 @@ public class ScheduleController {
 
 
     @GetMapping("/sel")
-    public List<Map<String, Object>> getNurse(@RequestParam Map<String, Object> params) {
+    public List<Map<String, Object>> getSchedule(@RequestParam Map<String, Object> params) {
 
         return nurseService.select("nurseDto.schedule_sel",params);
     }
 
 
     @PostMapping("/mod")
-    public Map<String, Object> nurseMod(@RequestBody List<Map<String, Object>> params) {
+    public Map<String, Object> ScheduleMod(@RequestBody List<Map<String, Object>> params) {
         System.out.println("params=" + params.toString());
         return nurseService.modify("nurseDto.schedule_mod",params);
+    }
+
+    @PostMapping("/delete")
+    public Map<String, Object> deleteAllData(@RequestBody Map<String, Object> params) {
+        System.out.println("params=" + params.toString());
+        return nurseService.modify("nurseDto.schedule_all_delete",params);
     }
 
 }

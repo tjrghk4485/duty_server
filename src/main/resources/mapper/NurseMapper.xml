@@ -94,8 +94,8 @@
         on a.nurse_id = b.nurse_id
         left outer join schedulemonthplan c
         on a.parent_id = c.parent_id
-        where a.parent_id = '100'
-          and c.work_date  = #{dateData}
+        where a.parent_id = #{parent_id}
+          and c.work_date  = #{work_date}
         GROUP BY
         a.parent_id, a.nurse_id
         ORDER BY
@@ -134,6 +134,19 @@
         )
 
     </update>
+
+    <update id="schedule_all_delete" statementType="CALLABLE" parameterType="java.util.Map" >
+
+        CALL schedule_all_delete(
+        #{work_date},
+        #{parent_id},
+        #{output_val, mode=OUT, jdbcType=VARCHAR} ,
+        #{output_msg, mode=OUT, jdbcType=VARCHAR}
+        )
+
+    </update>
+
+
 
     <update id="kakao_user_mod" statementType="CALLABLE" parameterType="java.util.Map" >
 
