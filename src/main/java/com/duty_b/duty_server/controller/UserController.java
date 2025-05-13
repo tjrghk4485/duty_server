@@ -1,18 +1,20 @@
 package com.duty_b.duty_server.controller;
 
 import com.duty_b.duty_server.service.NurseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @RestController
 @CrossOrigin("*")
 @RequestMapping(value = "user")
 public class UserController {
-    @Autowired
-    private NurseService nurseService;
+
+    private final NurseService nurseService;
 
 
     @GetMapping("/chk")

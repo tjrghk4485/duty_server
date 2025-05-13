@@ -90,12 +90,13 @@
                 MAX(CASE WHEN b.work_day = '30' THEN work_type ELSE NULL END) AS "30",
                 MAX(CASE WHEN b.work_day = '31' THEN work_type ELSE NULL END) AS "31"
         FROM nurse a
-        left outer join workschedule b
-        on a.nurse_id = b.nurse_id
         left outer join schedulemonthplan c
         on a.parent_id = c.parent_id
+        left outer join workschedule b
+        on a.nurse_id = b.nurse_id
+        AND b.WORK_DATE = c.WORK_DATE
         where a.parent_id = #{parent_id}
-          and c.work_date  = #{work_date}
+        and c.work_date  = #{work_date}
         GROUP BY
         a.parent_id, a.nurse_id
         ORDER BY
@@ -103,6 +104,39 @@
 
     </select>
 
+
+
+
+    <select id="sideSchedule_sel" parameterType="java.lang.String" resultType="java.util.Map">
+
+        SELECT a.parent_id,
+        a.nurse_id,
+        a.nurse_nm AS "name",
+        MAX(CASE WHEN b.work_day = '21' THEN work_type ELSE NULL END) AS "21",
+        MAX(CASE WHEN b.work_day = '22' THEN work_type ELSE NULL END) AS "22",
+        MAX(CASE WHEN b.work_day = '23' THEN work_type ELSE NULL END) AS "23",
+        MAX(CASE WHEN b.work_day = '24' THEN work_type ELSE NULL END) AS "24",
+        MAX(CASE WHEN b.work_day = '25' THEN work_type ELSE NULL END) AS "25",
+        MAX(CASE WHEN b.work_day = '26' THEN work_type ELSE NULL END) AS "26",
+        MAX(CASE WHEN b.work_day = '27' THEN work_type ELSE NULL END) AS "27",
+        MAX(CASE WHEN b.work_day = '28' THEN work_type ELSE NULL END) AS "28",
+        MAX(CASE WHEN b.work_day = '29' THEN work_type ELSE NULL END) AS "29",
+        MAX(CASE WHEN b.work_day = '30' THEN work_type ELSE NULL END) AS "30",
+        MAX(CASE WHEN b.work_day = '31' THEN work_type ELSE NULL END) AS "31"
+        FROM nurse a
+        left outer join schedulemonthplan c
+        on a.parent_id = c.parent_id
+        left outer join workschedule b
+        on a.nurse_id = b.nurse_id
+        AND b.WORK_DATE = c.WORK_DATE
+        where a.parent_id = #{parent_id}
+        and c.work_date  = #{work_date}
+        GROUP BY
+        a.parent_id, a.nurse_id
+        ORDER BY
+        a.parent_id, a.nurse_id;
+
+    </select>
 
 
     <update id="nurse_mod" statementType="CALLABLE" parameterType="java.util.Map" >
@@ -128,7 +162,7 @@
         #{parent_id},
         #{nurse_id},
         #{work_type},
-        #{work_day,jdbcType=VARCHAR},
+        #{work_day,jdbcType=INTEGER},
         #{output_val, mode=OUT, jdbcType=VARCHAR} ,
         #{output_msg, mode=OUT, jdbcType=VARCHAR}
         )
@@ -142,6 +176,19 @@
         #{parent_id},
         #{output_val, mode=OUT, jdbcType=VARCHAR} ,
         #{output_msg, mode=OUT, jdbcType=VARCHAR}
+        )
+
+    </update>
+
+
+    <update id="auto_schedule" statementType="CALLABLE" parameterType="java.util.Map" >
+
+        CALL generate_nurse_schedule(
+        #{parent_id},
+        #{work_date},
+        4
+<!--        #{output_val, mode=OUT, jdbcType=VARCHAR} ,-->
+<!--        #{output_msg, mode=OUT, jdbcType=VARCHAR}-->
         )
 
     </update>

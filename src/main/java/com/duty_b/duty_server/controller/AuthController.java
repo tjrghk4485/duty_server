@@ -14,11 +14,12 @@ import java.util.Map;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-    @Autowired
-    private  KakaoAuthService kakaoAuthService;
-    @Autowired
-    private  JwtService jwtService;
-    @CrossOrigin(origins = "http://localhost:3000") // CORS 허용
+
+    private final KakaoAuthService kakaoAuthService;
+
+    private final JwtService jwtService;
+
+
     @PostMapping("/kakao")
     public ResponseEntity<?> kakaoLogin(@RequestBody Map<String, String> request) {
         String code = request.get("code");
