@@ -44,6 +44,9 @@
                nurse_id,
                nurse_nm,
                start_date,
+               CASE
+                WHEN keep_type IS NULL THEN 'X'
+                ELSE keep_type END keep_type,
                 CASE
                 WHEN use_yn = 0 THEN FALSE
                 WHEN use_yn = 1 THEN TRUE
@@ -147,8 +150,9 @@
         #{nurse_id},
         #{nurse_nm},
         #{start_date},
+        #{keep_type},
         #{use_yn},
-        #{output_val, mode=OUT, jdbcType=VARCHAR} ,
+        #{output_val, mode=OUT, jdbcType=VARCHAR},
         #{output_msg, mode=OUT, jdbcType=VARCHAR}
         )
 
