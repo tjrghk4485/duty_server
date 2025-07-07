@@ -99,6 +99,7 @@
         on a.nurse_id = b.nurse_id
         AND b.WORK_DATE = c.WORK_DATE
         where a.parent_id = #{parent_id}
+        and a.use_yn = 1
         and c.work_date  = #{work_date}
         GROUP BY
         a.parent_id, a.nurse_id
@@ -133,6 +134,7 @@
         on a.nurse_id = b.nurse_id
         AND b.WORK_DATE = c.WORK_DATE
         where a.parent_id = #{parent_id}
+        and a.use_yn = 1
         and c.work_date  = #{work_date}
         GROUP BY
         a.parent_id, a.nurse_id
