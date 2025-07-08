@@ -186,6 +186,17 @@
 
     </update>
 
+    <update id="schedule_create" statementType="CALLABLE" parameterType="java.util.Map" >
+
+        CALL schedule_create(
+        #{work_date},
+        #{parent_id},
+        #{output_val, mode=OUT, jdbcType=VARCHAR} ,
+        #{output_msg, mode=OUT, jdbcType=VARCHAR}
+        )
+
+    </update>
+
 
     <update id="auto_schedule" statementType="CALLABLE" parameterType="java.util.Map" >
 

@@ -22,19 +22,17 @@ public class ScheduleController {
 
     @GetMapping("/sel")
     public List<Map<String, Object>> getSchedule(@RequestParam Map<String, Object> params) {
-
         return nurseService.select("nurseDto.schedule_sel",params);
     }
 
     @GetMapping("side/sel")
     public List<Map<String, Object>> getSideSchedule(@RequestParam Map<String, Object> params) {
-
         return nurseService.select("nurseDto.sideSchedule_sel",params);
     }
 
 
     @PostMapping("/mod")
-    public Map<String, Object> ScheduleMod(@RequestBody List<Map<String, Object>> params) {
+    public Map<String, Object> scheduleMod(@RequestBody List<Map<String, Object>> params) {
         System.out.println("params=" + params.toString());
         return nurseService.modify("nurseDto.schedule_mod",params);
     }
@@ -45,8 +43,15 @@ public class ScheduleController {
         return nurseService.modify("nurseDto.schedule_all_delete",params);
     }
 
+
+    @PostMapping("/create")
+    public Map<String, Object> createDuty(@RequestBody Map<String, Object> params) {
+        System.out.println("params=" + params.toString());
+        return nurseService.modify("nurseDto.schedule_create",params);
+    }
+
     @PostMapping("/auto")
-    public Map<String, Object> AutoCreateSchedule(@RequestBody Map<String, Object> params) {
+    public Map<String, Object> autoCreateSchedule(@RequestBody Map<String, Object> params) {
         System.out.println("params=" + params.toString());
         Map<String, Object> test = new HashMap<>();
          test.put("테스트용", "success");
