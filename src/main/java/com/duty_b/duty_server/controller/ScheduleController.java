@@ -53,9 +53,8 @@ public class ScheduleController {
     @PostMapping("/auto")
     public Map<String, Object> autoCreateSchedule(@RequestBody Map<String, Object> params) {
         System.out.println("params=" + params.toString());
-        Map<String, Object> test = new HashMap<>();
-         test.put("테스트용", "success");
-        return test;//nurseService.modify("nurseDto.auto_schedule",params);
+
+        return nurseService.modify("nurseDto.auto_schedule",params);
     }
 
 }

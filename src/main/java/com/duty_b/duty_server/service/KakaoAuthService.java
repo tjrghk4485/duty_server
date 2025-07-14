@@ -23,7 +23,7 @@ public class KakaoAuthService {
     private final String KAKAO_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
     private final String KAKAO_USER_INFO_URL = "https://kapi.kakao.com/v2/user/me";
     private final String CLIENT_ID = "b656293336f5e166383d543eb8f22357";
-    private final String REDIRECT_URI = "http://localhost:3000/auth/kakao";
+    private final String REDIRECT_URI = "http://localhost:3001/auth/kakao/Fe";
 
     @Autowired
     public KakaoAuthService(RestTemplate restTemplate, NurseService nurseService) {

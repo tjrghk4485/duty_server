@@ -50,7 +50,11 @@
                 CASE
                 WHEN use_yn = 0 THEN FALSE
                 WHEN use_yn = 1 THEN TRUE
-                END as use_yn
+                END as use_yn,
+                CASE
+                WHEN part_leader_yn = 0 THEN FALSE
+                WHEN part_leader_yn = 1 THEN TRUE
+                END as part_leader_yn
          from  nurse
         where parent_id = #{parent_id}
 
@@ -203,9 +207,9 @@
         CALL generate_nurse_schedule(
         #{parent_id},
         #{work_date},
-        4
-<!--        #{output_val, mode=OUT, jdbcType=VARCHAR} ,-->
-<!--        #{output_msg, mode=OUT, jdbcType=VARCHAR}-->
+        #{option},
+        #{output_val, mode=OUT, jdbcType=VARCHAR} ,
+        #{output_msg, mode=OUT, jdbcType=VARCHAR}
         )
 
     </update>
