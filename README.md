@@ -1,7 +1,7 @@
 자동 듀티표 생성기 입니다.
 
 배포링크: http://dutyrobot.duckdns.org:8080/
-계정: id: test1 pw: qwer1234
+계정 id: test1 pw: qwer1234
 
 <img width="1205" height="530" alt="image" src="https://github.com/user-attachments/assets/6d775ce3-4366-4b20-98a5-28dd8c3707bf" />
 
